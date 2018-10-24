@@ -27,19 +27,12 @@ int main()
     float scor;
 
     //Citirea de la tastatura
-    printf("Generati harta initiala: ");
     scanf("%llu", &harta);
-
-    printf("Harta initiala este:\n");
     print_map(harta);
-
-    printf("\nPrecizati numarul de mutari: ");
     scanf("%d",&mutari);
     for(i = 0, scor = 0;i < mutari;i++)
     {
-        printf("\nGenerati piesa: ");
         scanf("%llu",&piesa);
-        printf("\nPrecizati cele 8 transformari: ");
         for(k  =0;k < 8;k++)
         {
             scanf("%d",&transf[k]);
@@ -48,15 +41,17 @@ int main()
         for(k = 7;k >= 0;k--)
         {
             piesaTEMP = piesa << (8 * k);
-            //Daca are loc o coliziune, impiedicam piesa din a cobori, iar daca
-            //respectiva coliziune a avut loc pe cea mai de sus linie, atunci jocul ia sfarsit
+            //Daca are loc o coliziune, impiedicam piesa din a cobori,
+            //iar dacarespectiva coliziune a avut loc pe cea mai
+            //de sus linie, atunci jocul ia sfarsit
             if(piesaTEMP & harta)
             {
+                //daca piesa nu intra pe prima linie (cea mai de sus)
+                //jocul va lua sfarsit
                 if(7 == k)
                 {
                     scor = sqrt(zero(harta)) + pow(1.25, completedLines);
-                    printf("GAME OVER!\n");
-                    printf("Score:%0.2f", scor);
+                    printf("GAME OVER!\nScore:%0.2f",scor);
                     return 0;
                 }
                 else
@@ -86,9 +81,7 @@ int main()
     }
     scor = sqrt(zero(harta)) + pow(1.25, completedLines);
     print_map(harta);
-    printf("GAME OVER!\n");
-    printf("Score:%0.2f", scor);
-
+    printf("GAME OVER!\nScore:%0.2f",scor);
     return 0;
 }
 
@@ -131,7 +124,8 @@ int verif_harta(unsigned long long *h)
         {
             //Daca bitul este egal cu 1, ok creste
             ok++;
-            //Verificam daca ok a ajuns la 8, adica toti bitii de pe linie sunt 1
+            //Verificam daca ok a ajuns la 8,
+            //adica toti bitii de pe linie sunt 1
             if(8 == ok)
             {
                 //Eliminam linia plina si reinitializam ok
@@ -140,7 +134,8 @@ int verif_harta(unsigned long long *h)
                     *h=((*h >> (i+8)) << (i)) | ((*h << (64-i)) >> (64-i));
                     lines++;
                 }
-                //else, cazul banal in care linia de eliminat este linia finala, caz in care shiftam la dreapta cu 8 biti
+                //else, cazul banal in care linia de eliminat este
+                //linia finala, caz in care shiftam la dreapta cu 8 biti
                 else
                 {
                     *h >>= 8;
@@ -176,7 +171,7 @@ void miscareStanga(int miscari,
                    unsigned long long *harta)
 {
     int i;
-    for(i=0;i > miscari; i--)
+    for(i = 0;i > miscari; i--)
     {
         if(1 == ((*piesa >> 7) % 2) || 1 == ((*piesa >> 15) % 2))
         {
@@ -200,7 +195,7 @@ void miscareDreapta(int miscari,
                    unsigned long long *harta)
 {
     int i;
-    for(i=0;i < miscari; i++)
+    for(i = 0;i < miscari; i++)
     {
         if(*piesa % 2 || (*piesa>>8) % 2)
         {
@@ -218,12 +213,13 @@ void miscareDreapta(int miscari,
     }
 }
 
+//functia int zero va numara si va returna numarul de zerouri de pe harta
 int zero(unsigned long long h)
 {
     int i,nr=64;
-    for(i=0;i<64;i++)
+    for(i = 0;i < 64;i++)
     {
-        if((h>>i) & 1)
+        if((h >> i) & 1)
         {
             nr--;
         }
