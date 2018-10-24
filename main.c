@@ -1,14 +1,19 @@
 #include <stdio.h>
+#include <math.h>
 
 //declararea functiilor ce urmeaza a fi folosite
 void print_map(unsigned long long );
+
 int verif_harta(unsigned long long *);
+
 int coliziune(unsigned long long,
               unsigned long long);
+
 void miscareStanga(int,
                    unsigned long long *,
                    unsigned long long *,
                    unsigned long long *);
+
 void miscareDreapta(int,
                    unsigned long long *,
                    unsigned long long *,
@@ -51,6 +56,7 @@ int main()
                 if(7 == k)
                 {
                     scor = sqrt(zero(harta)) + pow(1.25, completedLines);
+                    print_map(harta);
                     printf("GAME OVER!\nScore:%0.2f",scor);
                     return 0;
                 }
